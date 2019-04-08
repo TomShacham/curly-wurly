@@ -4,12 +4,18 @@ import { response } from "./responses";
 import { bufferText } from "./bodies";
 
 export class CurlHandler implements HttpHandler {
+  constructor(private proxy?: string) {
+  }
+
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     let command = `curl -X ${request.method.toUpperCase()} -iv "${request.uri}" `;
     request.headers.forEach(header => command += `-H "${header[0]}: ${header[1]}" `);
     const requestBody = await bufferText(request.body);
     if (requestBody) command += `--data "${requestBody}" `;
+    if (this.proxy) command += `-x "${this.proxy}"`;
+
+    console.log(command)
 
     const responseString = child_process.execSync(command).toString('utf-8');
     const [headersString, bodyString] = responseString.split('\r\n\r\n');
@@ -21,6 +27,6 @@ export class CurlHandler implements HttpHandler {
   }
 }
 
-export async function curl(request: HttpRequest) {
-  return new CurlHandler().handle(request);
+export async function curl(request: HttpRequest, proxy?: string) {
+  return new CurlHandler(proxy).handle(request);
 }

@@ -50,4 +50,18 @@ describe('curl', () => {
     });
     expect(response.status).eq(200);
   });
+
+  it('proxies', async () => {
+    const response = await curl(request('GET', 'http://httpbin.org/get'), '185.74.39.146:41258');
+
+    expect(JSON.parse(await Buffered.text(response.body))).deep.include({
+      "args": {},
+      "headers": {
+        "Accept": "*/*",
+        "Host": "httpbin.org",
+        "User-Agent": "curl/7.54.0",
+      },
+      "url": "https://httpbin.org/get"
+    });
+  });
 });
