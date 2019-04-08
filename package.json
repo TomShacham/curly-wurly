@@ -1,10 +1,12 @@
 {
-  "name": "http4t-eg",
-  "version": "0.0.1",
+  "name": "curly-wurly",
+  "version": "0.0.3",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "mocha --require ts-node/register src/**/*.test.ts"
+    "build": "tsc",
+    "clean": "./clean.sh",
+    "test": "mocha --require ts-node/register test/**/*.test.ts"
   },
   "dependencies": {
     "ts-node": "^8.0.2",

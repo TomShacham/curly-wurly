@@ -9,8 +9,7 @@
     "noImplicitAny": false,
     "noUnusedLocals": false,
     "noUnusedParameters": true,
-    "esModuleInterop": true,
-    "noEmit": true
+    "esModuleInterop": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"],

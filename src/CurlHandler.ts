@@ -9,7 +9,7 @@ export class CurlHandler implements HttpHandler {
     let command = `curl -X ${request.method.toUpperCase()} -iv "${request.uri}" `;
     request.headers.forEach(header => command += `-H "${header[0]}: ${header[1]}" `);
     const requestBody = await bufferText(request.body);
-    if (requestBody) command += `--data "${requestBody}"`;
+    if (requestBody) command += `--data "${requestBody}" `;
 
     const responseString = child_process.execSync(command).toString('utf-8');
     const [headersString, bodyString] = responseString.split('\r\n\r\n');
