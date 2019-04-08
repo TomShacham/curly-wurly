@@ -7,14 +7,13 @@ describe('curl', () => {
   it('GET', async () => {
     const response = await curl(request('GET', 'http://httpbin.org/get'));
 
-    expect(JSON.parse(await Buffered.text(response.body))).eql({
+    expect(JSON.parse(await Buffered.text(response.body))).deep.include({
       "args": {},
       "headers": {
         "Accept": "*/*",
         "Host": "httpbin.org",
         "User-Agent": "curl/7.54.0",
       },
-      "origin": "80.43.87.237, 80.43.87.237",
       "url": "https://httpbin.org/get"
     });
     expect(response.status).eq(200);
@@ -23,7 +22,6 @@ describe('curl', () => {
       ["Access-Control-Allow-Origin", "*"],
       ["Content-Type", "application/json"],
       ["Server", "nginx"],
-      ["Content-Length", "200"],
       ["Connection", "keep-alive"]
     ].forEach(header => {
       expect(response.headers).deep.include(header);
