@@ -51,8 +51,9 @@ describe('curl', () => {
     expect(response.status).eq(200);
   });
 
-  it('proxies', async () => {
-    const response = await curl(request('GET', 'http://httpbin.org/get'), '185.74.39.146:41258');
+  it('proxies', async function () {
+    this.timeout(5000);
+    const response = await curl(request('GET', 'http://httpbin.org/get'), '51.83.31.150:3128');
 
     expect(JSON.parse(await Buffered.text(response.body))).deep.include({
       "args": {},
